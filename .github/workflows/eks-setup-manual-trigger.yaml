@@ -47,7 +47,9 @@ jobs:
       # both AWSReservedSSO_Administrator-* role and an IAM role running this job should get full access to this EKS cluster
       - name: Create EKS Cluster with CloudFormation
         run: |
-          SSO_ADMIN_ROLE=$(aws iam list-roles --query "Roles[?starts_with(RoleName, 'AWSReservedSSO_Administrator')].RoleName" --output text)
+          SSO_ADMIN_ROLE=$(aws iam list-roles --query "Roles[?starts_with(RoleName, 'AWSReservedSSO_Administrator_')].RoleName | [0]" \
+          --output text)
+          echo \"Using role: $SSO_ADMIN_ROLE\"
           make cluster name=temporary-eks-cluster-${{ github.event.inputs.environment_stage }} version=1.28 role=$SSO_ADMIN_ROLE
         working-directory: ./eks-cloudformation
 
