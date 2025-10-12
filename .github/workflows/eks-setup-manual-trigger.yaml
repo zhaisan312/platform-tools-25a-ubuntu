@@ -60,7 +60,7 @@ jobs:
             exit 1
           fi
           echo \"Using role:: $SSO_ADMIN_ROLE\"
-          make cluster name=temporary-eks-cluster-${{ github.event.inputs.environment_stage }} version=1.28 role=$SSO_ADMIN_ROLE
+          make cluster name=temporary-eks-cluster-${{ github.event.inputs.environment_stage }} version=1.31 role="$SSO_ADMIN_ROLE"
         working-directory: ./eks-cloudformation
 
       # Login to EKS
